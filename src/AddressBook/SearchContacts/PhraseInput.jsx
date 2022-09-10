@@ -11,11 +11,11 @@ class PhraseInput extends React.Component {
     downshiftGetInputProps: PropTypes.func.isRequired,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.inputRef.focus();
   }
 
-  render () {
+  render() {
     const {
       phrase,
       onPhraseChange,
@@ -30,7 +30,7 @@ class PhraseInput extends React.Component {
           ref: inputRef => this.inputRef = inputRef,
           placeholder: "To show contact's details, type its name…",
           value: phrase,
-          onChange: event => onPhraseChange("phrase"),
+          onChange: event => onPhraseChange(event.target.value),
         })}
       />
     );

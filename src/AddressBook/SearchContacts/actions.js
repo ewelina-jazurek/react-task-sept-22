@@ -5,6 +5,9 @@ export const UPDATE_SEARCH_PHRASE__FAILURE = "UPDATE_SEARCH_PHRASE__FAILURE";
 // TODO something is missing here
 export const updateSearchPhraseStart = ({ newPhrase }) => ({
   type: UPDATE_SEARCH_PHRASE__START,
+  payload: {
+    newPhrase,
+  }
 });
 export const updateSearchPhraseSuccess = ({ matchingContacts }) => ({
   type: UPDATE_SEARCH_PHRASE__SUCCESS,

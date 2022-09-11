@@ -8,7 +8,8 @@ export const updateSearchPhrase = newPhrase =>
     );
     httpApi.getFirst5MatchingContacts({ namePart: newPhrase })
       .then(({ data }) => {
-        const matchingContacts = data.map(contact => ({
+        const matchingContacts = data.map((contact) =>
+        ({
           id: contact.id,
           value: contact.name,
         }));
@@ -19,6 +20,7 @@ export const updateSearchPhrase = newPhrase =>
       })
       .catch(() => {
         // TODO something is missing here
+        dispatch(searchActions.updateSearchPhraseFailure());
       });
   };
 
@@ -27,14 +29,26 @@ export const selectMatchingContact = selectedMatchingContact =>
 
     // TODO something is missing here
     const getContactDetails = ({ id }) => {
-      return httpApi
+      let value = dataCache.get(id);
+
+      if (value) {
+        return new Promise((resolve, reject) =>
+          resolve(value));
+      } else {
+        return httpApi
           .getContact({ contactId: selectedMatchingContact.id })
-          .then(({ data }) => ({
-            id: data.id,
-            name: data.name,
-            phone: data.phone,
-            addressLines: data.addressLines,
-          }));
+          .then(({ data }) => {
+            const val = {
+              id: data.id,
+              name: data.name,
+              phone: data.phone,
+              addressLines: data.addressLines,
+            };
+            dataCache.set(id, val);
+            return val;
+          })
+      };
+
     };
 
     dispatch(

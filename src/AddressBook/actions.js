@@ -8,17 +8,20 @@ export const updateSearchPhrase = newPhrase =>
     );
     httpApi.getFirst5MatchingContacts({ namePart: newPhrase })
       .then(({ data }) => {
-        const matchingContacts = data.map(contact => ({
+        const matchingContacts = data.map((contact) =>
+        ({
           id: contact.id,
           value: contact.name,
         }));
         // TODO something is wrong here
         dispatch(
-          searchActions.updateSearchPhraseSuccess({ matchingContacts: [] }),
+          searchActions.updateSearchPhraseSuccess({ matchingContacts: matchingContacts }),
         );
       })
       .catch(() => {
         // TODO something is missing here
+        dispatch(
+          contactDetailsActions.fetchContactDetailsFailure());
       });
   };
 
@@ -28,13 +31,13 @@ export const selectMatchingContact = selectedMatchingContact =>
     // TODO something is missing here
     const getContactDetails = ({ id }) => {
       return httpApi
-          .getContact({ contactId: selectedMatchingContact.id })
-          .then(({ data }) => ({
-            id: data.id,
-            name: data.name,
-            phone: data.phone,
-            addressLines: data.addressLines,
-          }));
+        .getContact({ contactId: id })
+        .then(({ data }) => ({
+          id: data.id,
+          name: data.name,
+          phone: data.phone,
+          addressLines: data.addressLines,
+        }));
     };
 
     dispatch(
@@ -53,7 +56,7 @@ export const selectMatchingContact = selectedMatchingContact =>
         });
         // TODO something is wrong here
         dispatch(
-          contactDetailsActions.fetchContactDetailsFailure(),
+          contactDetailsActions.fetchContactDetailsSuccess(contactDetails),
         );
       })
       .catch(() => {

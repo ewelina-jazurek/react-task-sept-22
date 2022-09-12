@@ -29,19 +29,19 @@ const reducer = (state = initialState, action) => {
         matchingContacts: payload.matchingContacts,
       };
 
-    // TODO something is wrong here
+    // search failure should be true for failure action
     case UPDATE_SEARCH_PHRASE__FAILURE:
       return {
         ...state,
-        searchFailure: false,
+        searchFailure: true,
       };
 
-    // TODO something is wrong here
+    // phase is text not id && matching contacts is matched object
     case SELECT_MATCHING_CONTACT:
       return {
         ...state,
-        phrase: payload.selectedMatchingContact.id,
-        matchingContacts: [],
+        phrase: payload.selectedMatchingContact.value,
+        matchingContacts: [payload.selectedMatchingContact],
       };
 
     default:

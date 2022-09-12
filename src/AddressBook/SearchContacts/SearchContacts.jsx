@@ -23,7 +23,7 @@ class SearchContacts extends React.Component {
     hasFailedToSearch: PropTypes.bool.isRequired,
   };
 
-  render () {
+  render() {
     const {
       phrase,
       onPhraseChange,
@@ -39,12 +39,12 @@ class SearchContacts extends React.Component {
           onChange={item => onMatchingContactSelect(item)}
         >
           {({
-              isOpen,
-              highlightedIndex,
-              getInputProps,
-              getMenuProps,
-              getItemProps,
-            }) => (
+            isOpen,
+            highlightedIndex,
+            getInputProps,
+            getMenuProps,
+            getItemProps,
+          }) => (
             <div>
               <PhraseInput
                 phrase={phrase}
@@ -81,9 +81,11 @@ const mapReduxStateToProps = state => ({
 const mapReduxDispatchToProps = dispatch => ({
   onPhraseChange:
     (newPhrase) => dispatch(updateSearchPhrase(newPhrase)),
-  // TODO something is wrong here
+  // exp: selectMatchingContact action should be dispatched instead of updateSearchPhrase
   onMatchingContactSelect:
-    (selectedMatchingContact) => dispatch(updateSearchPhrase(selectedMatchingContact.value)),
+    (selectedMatchingContact) => {
+      dispatch(selectMatchingContact(selectedMatchingContact));
+    },
 });
 
 export default connectWithRedux(

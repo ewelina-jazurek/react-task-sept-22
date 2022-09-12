@@ -3,8 +3,8 @@ import { combineReducers } from "redux";
 import { reducer as searchReducer } from "./SearchContacts";
 import { reducer as contactDetailsReducer } from "./ContactDetails";
 
-// TODO something is wrong here
+// exp: bind reducer
 export default combineReducers({
   search: searchReducer,
-  contactDetails: () => ({}),
+  contactDetails: contactDetailsReducer
 });
